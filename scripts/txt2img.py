@@ -57,7 +57,8 @@ def parse_args():
         "--prompt",
         type=str,
         nargs="?",
-        default="a professional photograph of an astronaut riding a triceratops",
+        # default="a professional photograph of an astronaut riding a triceratops",
+        default="masterpiece, best quality, 1girl, green hair, sweater, looking at viewer, upper body, beanie, outdoors, watercolor, night, turtleneck",
         help="the prompt to render"
     )
     parser.add_argument(
@@ -150,12 +151,13 @@ def parse_args():
     parser.add_argument(
         "--config",
         type=str,
-        default="configs/stable-diffusion/v2-inference.yaml",
+        default="configs/stable-diffusion/wd.yaml",
         help="path to config which constructs model",
     )
     parser.add_argument(
         "--ckpt",
         type=str,
+        default="models/wd.ckpt",
         help="path to checkpoint of model",
     )
     parser.add_argument(
@@ -182,7 +184,7 @@ def parse_args():
         type=str,
         help="Device on which Stable Diffusion will be run",
         choices=["cpu", "cuda"],
-        default="cpu"
+        default="cuda"
     )
     parser.add_argument(
         "--torchscript",

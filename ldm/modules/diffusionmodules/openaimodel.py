@@ -797,7 +797,18 @@ class UNetModel(nn.Module):
             h = module(h, emb, context)
             hs.append(h)
         h = self.middle_block(h, emb, context)
-        for module in self.output_blocks:
+        # for module in self.output_blocks:
+        #     h = th.cat([h, hs.pop()], dim=1)
+        #     h = module(h, emb, context)
+        # h = h.type(x.dtype)
+        from freeU import Fourier_filter
+        for i, module in enumerate(self.output_blocks):
+            if i == len(self.output_blocks) - 1:
+                h = h * 1.4
+                hs[-1] = Fourier_filter(hs[-1], threshold=1, scale=0.2)
+            if i == len(self.output_blocks):
+                h = h * 1.2
+                hs[-1] = Fourier_filter(hs[-1], threshold=1, scale=0.8)
             h = th.cat([h, hs.pop()], dim=1)
             h = module(h, emb, context)
         h = h.type(x.dtype)
